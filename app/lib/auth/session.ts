@@ -132,7 +132,7 @@ export async function invalidateSession(token: string): Promise<void> {
 
 export async function invalidateAllSessionsForUser(
   userId: string,
-  userType : "employee" | "owner"
+  userType : "admin" | "client"
 ): Promise<void> {
   const indexKey = USER_INDEX_PREFIX + userId + userType;
   const hashes = await redis.smembers(indexKey);

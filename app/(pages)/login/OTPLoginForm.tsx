@@ -30,6 +30,8 @@ import { toast } from "sonner";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { Spinner } from "@/components/ui/spinner";
+import { useState } from "react";
 
 type Props = {
   verification_attempts: number;
@@ -46,7 +48,14 @@ const OTPLoginForm = ({
   max_otp_resends,
   max_verification_attempts,
 }: Props) => {
-  const { control, handleSubmit, setValue } = useForm({
+  const [resendLoading, setResendLoading] = useState(false);
+
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { isSubmitting },
+  } = useForm({
     resolver: zodResolver(LoginOTPValidationSchema),
   });
 
@@ -65,12 +74,19 @@ const OTPLoginForm = ({
   }
 
   async function resend() {
-    const { error } = await LoginResendOTPAction();
+    setResendLoading(true);
+    try {
+      const { error } = await LoginResendOTPAction();
 
-    if (error) {
-      toast.error(error, { position: "top-center" });
-    } else {
-      toast.success("OTP Resent", { position: "top-center" });
+      if (error) {
+        toast.error(error, { position: "top-center" });
+      } else {
+        toast.success("OTP Resent", { position: "top-center" });
+      }
+    } catch (error) {
+      toast.error("Something went wrong", { position: "top-center" });
+    } finally {
+      setResendLoading(false);
     }
   }
 
@@ -101,7 +117,9 @@ const OTPLoginForm = ({
           <CardTitle>OTP Sent on Registered Email</CardTitle>
           <CardDescription onClick={() => resend()}>
             Haven't received OTP yet?{" "}
-            <span className="text-blue-600 underline cursor-pointer">
+            <span
+              className={`underline ${resendLoading ? "pointer-events-none text-neutral-300 cursor-none" : "text-blue-600 cursor-pointer"}`}
+            >
               {`Resend OTP ${resend_remaining}/${max_otp_resends}`}
             </span>
           </CardDescription>
@@ -162,9 +180,12 @@ const OTPLoginForm = ({
           <Button
             type="submit"
             className="w-full"
-            disabled={verification_attempts === max_verification_attempts}
+            disabled={
+              verification_attempts === max_verification_attempts ||
+              isSubmitting
+            }
           >
-            Login <ArrowRight />
+            Login {isSubmitting ? <Spinner /> : <ArrowRight />}
           </Button>
         </CardFooter>
       </Card>

@@ -11,9 +11,10 @@ import {
 } from "../validation/login";
 import { AppError } from "../utils/error/AppError";
 import logger from "../lib/logger/config";
-import { getSessionCookie, setSessionCookie } from "../lib/auth/cookies";
+import { deleteSessionCookie, getSessionCookie, setSessionCookie } from "../lib/auth/cookies";
 import {
   createSession,
+  invalidateSession,
   readSessionByToken,
   updateSession,
 } from "../lib/auth/session";
@@ -232,3 +233,48 @@ export async  function LoginResendOTPAction() {
   }
 }
 
+
+
+export async function LogoutAction() {
+  try {
+    
+    const session_token = await getSessionCookie(); // Get cookies
+
+
+    if (session_token === null) {
+      throw new AppError("Login first", true);
+    }
+
+    const session_info = await readSessionByToken(session_token);
+
+    if (session_info === null) {
+      throw new AppError("Login first", true);
+    }
+
+    if (session_info.auth_state === "otp") {
+      throw new AppError("Login first", true);
+    }
+
+    await invalidateSession(session_token); 
+
+    await deleteSessionCookie();
+
+    return {
+      message : "Success"
+    }
+
+
+  } catch (error : any) {
+    if (
+      typeof error.isOperational === "undefined" ||
+      error.isOperational === false
+    ) {
+      logger.error(`LogoutAction : ${error.message}`);
+      return { error: "Server Error" };
+    } else {
+      return {
+        error: error.message ? (error.message as string) : "Server Error",
+      };
+    }
+  }
+}

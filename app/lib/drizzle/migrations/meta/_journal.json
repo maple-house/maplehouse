@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1794573525718,
-      "tag": "0000_even_puck",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1794590654338,
-      "tag": "0001_third_giant_man",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1794590797803,
-      "tag": "0002_perpetual_adam_warlock",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1794590924240,
-      "tag": "0003_naive_mikhail_rasputin",
+      "when": 1794657232430,
+      "tag": "0000_cooing_spitfire",
       "breakpoints": true
     }
   ]

@@ -19,9 +19,14 @@ import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { ArrowRight } from "lucide-react";
 import { LoginEmailAction } from "../../actions/login";
 import { toast } from "sonner";
+import { Spinner } from "@/components/ui/spinner";
 
 const EmailLoginForm = () => {
-  const { control, handleSubmit } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm({
     resolver: zodResolver(LoginEmailValidationSchema),
   });
 
@@ -73,8 +78,8 @@ const EmailLoginForm = () => {
           />
         </CardContent>
         <CardFooter className="flex-col gap-2">
-          <Button type="submit" className="w-full">
-            Login <ArrowRight />
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            Login {isSubmitting ? <Spinner /> : <ArrowRight />}
           </Button>
         </CardFooter>
       </Card>

@@ -1,5 +1,5 @@
 {
-  "id": "8a7faa1e-ffda-442f-98c1-7ead8cd56771",
+  "id": "fe9c9d6b-83d6-4883-ba0f-c258f446698a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -30,7 +30,7 @@
           "name": "email",
           "type": "varchar(250)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "contact": {
           "name": "contact",
@@ -70,6 +70,13 @@
           "primaryKey": false,
           "notNull": true,
           "default": false
+        },
+        "role": {
+          "name": "role",
+          "type": "role",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -96,7 +103,16 @@
       "isRLSEnabled": false
     }
   },
-  "enums": {},
+  "enums": {
+    "public.role": {
+      "name": "role",
+      "schema": "public",
+      "values": [
+        "admin",
+        "client"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "roles": {},
