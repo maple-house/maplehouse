@@ -20,6 +20,7 @@ import {
 } from "../lib/auth/session";
 import { createOTP, verifyOTP } from "../lib/auth/otp";
 import { revalidatePath } from "next/cache";
+import { otp_mail } from "../lib/mail/otp_mail";
 
 export async function LoginEmailAction(
   formState: TypeLoginEmailValidationSchema,
@@ -68,7 +69,11 @@ export async function LoginEmailAction(
     //Generate OTP
     const { otp } = await createOTP(user[0].email);
 
-    console.log(otp);
+    if(process.env.ENV === "prod") {
+      await otp_mail(user[0].email,otp,`${user[0].first_name} ${user[0].last_name}`);
+    }else {
+      console.log(otp);
+    } 
 
     //Create Partial Session
     const { token } = await createSession({

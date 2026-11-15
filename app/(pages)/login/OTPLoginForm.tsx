@@ -95,11 +95,11 @@ const OTPLoginForm = ({
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle>Account on Lockdown</CardTitle>
-          <CardDescription onClick={() => resend()}>
+          <CardDescription>
             We have noticed too many failed attempts at logging in from this
             account.
           </CardDescription>
-          <CardDescription onClick={() => resend()}>
+          <CardDescription>
             {`The account will be in lockdown till ${new Date(new Date().getTime() + lockdown).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}`}
           </CardDescription>
         </CardHeader>

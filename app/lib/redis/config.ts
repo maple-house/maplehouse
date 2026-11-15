@@ -7,7 +7,7 @@ const globalForRedis = globalThis as unknown as {
 
 const redis: Redis =
   globalForRedis.ioredisClient ??
-  new Redis(process.env.REDIS_URL ?? "redis://localhost:6379", {
+  new Redis(process.env.ENV === "prod" ? process.env.REDIS_URL_PROD! : process.env.REDIS_URL_LOCAL!, {
     // don't crash on startup if Redis isn't reachable yet — retry instead
     maxRetriesPerRequest: 3,
     retryStrategy(times) {

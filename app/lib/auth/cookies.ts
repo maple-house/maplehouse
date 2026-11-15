@@ -11,7 +11,7 @@ export async function setSessionCookie(
   const signedValue = await signToken(token);
   store.set(SESSION_COOKIE_NAME, signedValue, {
     httpOnly: true, // inaccessible to JS — the primary XSS mitigation for session theft
-    secure: false, // required by the __Host- prefix; also just correct
+    secure: process.env.ENV === "prod" ? true : false, // required by the __Host- prefix; also just correct
     sameSite: "lax", // blocks the classic cross-site POST/state-changing CSRF vector
     path: "/", // required by the __Host- prefix
     expires: expiresAt, // explicit, matches your per-role session lifetime exactly
@@ -33,7 +33,7 @@ export async function deleteSessionCookie(): Promise<void> {
   // doesn't actually clear the cookie" bugs).
   store.set(SESSION_COOKIE_NAME, "", {
     httpOnly: true,
-    secure: true,
+    secure: process.env.ENV === "prod" ? true : false,
     sameSite: "lax",
     path: "/",
     expires: new Date(0),
