@@ -44,8 +44,8 @@ async function LoginPage() {
 
   return (
     <div className="w-screen h-screen flex">
-      <div className="w-1/2 bg-brown text-white flex items-center justify-center flex-col">
-        <p className="text-4xl font-bold font-serif tracking-wide">
+      <div className="w-1/2 bg-main text-white flex items-center justify-center flex-col">
+        <p className="text-4xl font-bold font-serif tracking-wide text-accent">
           Maple House
         </p>
         <p className="text-lg font-light tracking-widest">
