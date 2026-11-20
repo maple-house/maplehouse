@@ -21,9 +21,12 @@ const LoggedIn = () => {
       </CardHeader>
       <CardContent></CardContent>
       <CardFooter className="flex-col gap-2">
-        <Button type="submit" className="w-full">
-          <Link href="/dashboard">To Dashboard</Link>
-        </Button>
+        {" "}
+        <Link href="/dashboard" className="w-full">
+          <Button type="submit" className="w-full">
+            To Dashboard
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );
