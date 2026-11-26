@@ -86,7 +86,7 @@ export async function LoginEmailAction(
     //Send Cookie
     await setSessionCookie(
       token,
-      new Date(new Date().getTime() + 12 * 60 * 60 * 1000),
+      new Date(new Date().getTime() + 12 * 60 * 60 * 1000), //12 Hours
     );
 
     //User has cleared this stage
@@ -214,7 +214,11 @@ export async  function LoginResendOTPAction() {
     //Generate OTP
     const {otp} = await createOTP(user[0].email);
 
-    console.log(otp);
+    if(process.env.ENV === "prod") {
+      await otp_mail(user[0].email,otp,`${user[0].first_name} ${user[0].last_name}`);
+    }else {
+      console.log(otp);
+    }
 
     return {
       message : "Success"

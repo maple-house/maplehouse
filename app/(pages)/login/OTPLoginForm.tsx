@@ -120,7 +120,7 @@ const OTPLoginForm = ({
             <span
               className={`underline ${resendLoading ? "pointer-events-none text-neutral-300 cursor-none" : "text-blue-600 cursor-pointer"}`}
             >
-              {`Resend OTP ${resend_remaining}/${max_otp_resends}`}
+              {`Resend OTP ${max_otp_resends - resend_remaining}/${max_otp_resends}`}
             </span>
           </CardDescription>
         </CardHeader>

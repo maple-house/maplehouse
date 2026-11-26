@@ -16,6 +16,8 @@
  * global logout.
  */
 
+import { AppError } from "@/app/utils/error/AppError";
+
 const encoder = new TextEncoder();
 
 let cachedKey: CryptoKey | null = null;
@@ -23,7 +25,7 @@ let cachedKey: CryptoKey | null = null;
 async function getKey(): Promise<CryptoKey> {
   if (cachedKey) return cachedKey;
   const secret = process.env.SESSION_SECRET;
-  if (!secret) throw new Error("SESSION_SECRET is not set");
+  if (!secret) throw new AppError("SESSION_SECRET is not set",false);
 
   cachedKey = await crypto.subtle.importKey(
     "raw",

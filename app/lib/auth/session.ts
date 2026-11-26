@@ -87,7 +87,7 @@ export async function createSession(session : TypeInsertSessionSchema) {
 
     //Store session data in redis
     const pipeline = redis.pipeline(); //Initiates a pipeline of commands
-    pipeline.set(SESSION_PREFIX + hash, serialized_data,"EX",expiry_time); //Sets session with hash as the key
+    pipeline.set(SESSION_PREFIX + hash, serialized_data,"PX",expiry_time); //Sets session with hash as the key
     pipeline.sadd(USER_INDEX_PREFIX + user_id + user_type, hash); //Sets user_id as the key to the hash in redis set, if session from user_id is required
     pipeline.expire(USER_INDEX_PREFIX + user_id + user_type, expiry_time);//Sets expiry on for the corresponding redis set key
     await pipeline.exec(); //Execute the commands
@@ -124,7 +124,7 @@ export async function invalidateSession(token: string): Promise<void> {
 
 
   if (raw !== null) {
-    const { user_id, user_type } = JSON.parse(raw) as SessionRecord;  //Get the user_id from Session Data
+    const { user_id, user_type } = JSONParser(raw) as SessionRecord;  //Get the user_id from Session Data
     await redis.srem(USER_INDEX_PREFIX + user_id + user_type, hash); //Delete the set key from redis
   }
 }

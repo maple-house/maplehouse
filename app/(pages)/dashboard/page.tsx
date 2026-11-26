@@ -4,20 +4,25 @@ import { readSessionByToken } from "@/app/lib/auth/session";
 import { db } from "@/app/lib/drizzle/config";
 import { UserTable } from "@/app/lib/drizzle/schema";
 import { eq } from "drizzle-orm";
+import { redirect } from "next/navigation";
 
 async function DashboardPage() {
   //Session Token
   const session_token = await getSessionCookie(); // Get cookies
 
   if (session_token === null) {
-    throw new Error("Please login");
+    redirect("/login");
   }
 
   //Read Session from the session store
   const session_info = await readSessionByToken(session_token); //Get session info from cookies
 
   if (session_info === null) {
-    throw new Error("Please login");
+    redirect("/login");
+  }
+
+  if (session_info.auth_state !== "complete") {
+    redirect("/login");
   }
 
   //User
