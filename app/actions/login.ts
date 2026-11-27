@@ -68,7 +68,7 @@ export async function LoginEmailAction(
     //Generate OTP
     const { otp } = await createOTP(user[0].email);
 
-    if(process.env.ENV === "prod") {
+    if(process.env.NODE_ENV === "production") {
       await otp_mail(user[0].email,otp,`${user[0].first_name} ${user[0].last_name}`);
     }else {
       console.log(otp);
@@ -213,7 +213,7 @@ export async  function LoginResendOTPAction() {
     //Generate OTP
     const {otp} = await createOTP(user[0].email);
 
-    if(process.env.ENV === "prod") {
+    if(process.env.NODE_ENV === "production") {
       await otp_mail(user[0].email,otp,`${user[0].first_name} ${user[0].last_name}`);
     }else {
       console.log(otp);

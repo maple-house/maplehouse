@@ -39,7 +39,7 @@ export async function issueCsrfToken(): Promise<string> {
   const store = await cookies();
   store.set(CSRF_COOKIE_NAME, token, {
     httpOnly: false, // must be readable by client JS to echo back in the header
-    secure: process.env.ENV === "prod" ? true : false,
+    secure: process.env.NODE_ENV === "production" ? true : false,
     sameSite: "lax",
     path: "/",
   });
