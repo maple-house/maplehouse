@@ -1,0 +1,60 @@
+{
+  message: 'ioredis error: AggregateError',
+  level: 'error',
+  timestamp: '2026-11-27T13:58:46.476Z'
+}
+{
+  message: 'ioredis error: AggregateError',
+  level: 'error',
+  timestamp: '2026-11-27T13:58:46.702Z'
+}
+{
+  message: 'ioredis error: AggregateError',
+  level: 'error',
+  timestamp: '2026-11-27T13:58:47.105Z'
+}
+{
+  message: 'ioredis error: AggregateError',
+  level: 'error',
+  timestamp: '2026-11-27T13:58:47.720Z'
+}
+{
+  message: 'ioredis error: AggregateError',
+  level: 'error',
+  timestamp: '2026-11-27T13:58:48.522Z'
+}
+{
+  message: 'ioredis error: AggregateError',
+  level: 'error',
+  timestamp: '2026-11-27T13:58:49.530Z'
+}
+{
+  message: 'ioredis error: AggregateError',
+  level: 'error',
+  timestamp: '2026-11-27T13:58:50.743Z'
+}
+{
+  message: 'ioredis error: AggregateError',
+  level: 'error',
+  timestamp: '2026-11-27T13:58:52.157Z'
+}
+{
+  message: 'ioredis error: AggregateError',
+  level: 'error',
+  timestamp: '2026-11-27T13:58:53.762Z'
+}
+{
+  message: 'ioredis error: AggregateError',
+  level: 'error',
+  timestamp: '2026-11-27T13:58:55.575Z'
+}
+{
+  message: 'ioredis error: AggregateError',
+  level: 'error',
+  timestamp: '2026-11-27T13:58:57.588Z'
+}
+{
+  message: 'ioredis error: AggregateError',
+  level: 'error',
+  timestamp: '2026-11-27T13:58:59.802Z'
+}
