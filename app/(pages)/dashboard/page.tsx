@@ -1,27 +1,17 @@
+import { GetUserRole } from "@/app/actions/auth";
 import LogoutButton from "@/app/components/LogoutButton";
-import { getSessionCookie } from "@/app/lib/auth/cookies";
-import { readSessionByToken } from "@/app/lib/auth/session";
 import { db } from "@/app/lib/drizzle/config";
 import { UserTable } from "@/app/lib/drizzle/schema";
+import { wait } from "@/app/utils/miscellaneous/wait";
+import { Button } from "@/components/ui/button";
 import { eq } from "drizzle-orm";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 async function DashboardPage() {
-  //Session Token
-  const session_token = await getSessionCookie(); // Get cookies
+  const { auth, user_id, role } = await GetUserRole();
 
-  if (session_token === null) {
-    redirect("/login");
-  }
-
-  //Read Session from the session store
-  const session_info = await readSessionByToken(session_token); //Get session info from cookies
-
-  if (session_info === null) {
-    redirect("/login");
-  }
-
-  if (session_info.auth_state !== "complete") {
+  if (auth === false) {
     redirect("/login");
   }
 
@@ -29,16 +19,22 @@ async function DashboardPage() {
   const user = await db
     .select()
     .from(UserTable)
-    .where(eq(UserTable.id, session_info.user_id));
+    .where(eq(UserTable.id, user_id));
 
   return (
-    <div className="flex items-center justify-center w-screen h-screen flex-col">
-      <p>
+    <>
+      <p className="font-heading">
         {" "}
-        {`Hello ${user[0].first_name} ${user[0].last_name} - ${session_info.user_type}`}
+        {`Hello ${user[0].first_name} ${user[0].last_name} - ${role}`}
       </p>
       <LogoutButton />
-    </div>
+      <Link
+        href="/important"
+        className="mt-5 text-blue-600 underline cursor-pointer font-heading"
+      >
+        Important Page
+      </Link>
+    </>
   );
 }
 

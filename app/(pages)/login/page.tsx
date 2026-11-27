@@ -2,11 +2,12 @@ import { getSessionCookie } from "@/app/lib/auth/cookies";
 import EmailLoginForm from "./EmailLoginForm";
 import OTPLoginForm from "./OTPLoginForm";
 import { readSessionByToken } from "@/app/lib/auth/session";
-import LoggedIn from "./LoggedIn";
 import { getOTPState } from "@/app/lib/auth/otp";
 import { db } from "@/app/lib/drizzle/config";
 import { UserTable } from "@/app/lib/drizzle/schema";
 import { eq } from "drizzle-orm";
+import Logo from "@/app/components/Logo";
+import { redirect } from "next/navigation";
 
 async function LoginPage() {
   async function getPageState() {
@@ -25,7 +26,7 @@ async function LoginPage() {
     }
 
     if (session_info.auth_state === "complete") {
-      return <LoggedIn />;
+      redirect("/dashboard");
     }
 
     if (session_info.auth_state === "otp") {
@@ -45,14 +46,15 @@ async function LoginPage() {
   return (
     <div className="w-screen h-screen flex">
       <div className="w-1/2 bg-main text-white flex items-center justify-center flex-col">
-        <p className="text-4xl font-bold font-serif tracking-wide text-accent">
-          Maple House
+        <Logo classname="w-50 h-auto" />
+        <p className="text-accent font-bold text-3xl font-aelo mt-5 tracking-widest">
+          MAPLE HOUSE
         </p>
-        <p className="text-lg font-light tracking-widest">
+        <p className="text-lg tracking-widest text-accent font-aelo">
           Interior and Decor Studio
         </p>
       </div>
-      <div className="w-1/2 bg-white flex items-center justify-center">
+      <div className="w-1/2 bg-white flex items-center justify-center font-sans">
         {getPageState()}
       </div>
     </div>

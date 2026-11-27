@@ -1,8 +1,13 @@
+import Logo from "./components/Logo";
+
 const GlobalLoading = () => {
   return (
-    <div className="w-screen h-screen flex items-center justify-center flex-col bg-brown text-white">
-      <p className="text-4xl font-bold font-serif tracking-wide">Maple House</p>
-      <p className="text-lg font-light tracking-widest">
+    <div className="w-screen h-screen flex items-center justify-center flex-col bg-main">
+      <Logo classname="w-50 h-auto" />
+      <p className="text-accent font-bold text-3xl font-aelo mt-5 tracking-widest">
+        MAPLE HOUSE
+      </p>
+      <p className="text-lg tracking-widest text-accent font-aelo">
         Interior and Decor Studio
       </p>
       <>
@@ -30,10 +35,10 @@ const GlobalLoading = () => {
             h-[0.05em] w-[2em] mt-2 rounded-[0.05em]
  
             before:content-[''] before:absolute before:h-full before:w-full
-            before:bg-white before:opacity-30
+            before:bg-accent before:opacity-30
  
             after:content-[''] after:absolute after:h-full after:w-full
-            after:bg-white after:rounded-[0.05em]
+            after:bg-accent after:rounded-[0.05em]
             after:animate-[loader-wobble_2s_cubic-bezier(0.5,0.8,0.5,0.2)_infinite]
           "
           />
