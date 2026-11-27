@@ -10,7 +10,6 @@ import {
   TypeLoginOTPValidationSchema,
 } from "../validation/login";
 import { AppError } from "../utils/error/AppError";
-import logger from "../lib/logger/config";
 import { deleteSessionCookie, getSessionCookie, setSessionCookie } from "../lib/auth/cookies";
 import {
   createSession,
@@ -98,7 +97,7 @@ export async function LoginEmailAction(
       typeof error.isOperational === "undefined" ||
       error.isOperational === false
     ) {
-      logger.error(`LoginEmailAction : ${error.message}`);
+      console.error(`LoginEmailAction : ${error.message}`);
       return { error: "Server Error" };
     } else {
       return {
@@ -160,7 +159,7 @@ export async function LoginOTPAction(formState: TypeLoginOTPValidationSchema) {
       typeof error.isOperational === "undefined" ||
       error.isOperational === false
     ) {
-      logger.error(`LoginOTPAction : ${error.message}`);
+      console.error(`LoginOTPAction : ${error.message}`);
       return { error: "Server Error" };
     } else {
       return {
@@ -230,7 +229,7 @@ export async  function LoginResendOTPAction() {
       typeof error.isOperational === "undefined" ||
       error.isOperational === false
     ) {
-      logger.error(`LoginResendOTPAction : ${error.message}`);
+      console.error(`LoginResendOTPAction : ${error.message}`);
       return { error: "Server Error" };
     } else {
       return {
@@ -278,7 +277,7 @@ export async function LogoutAction() {
       typeof error.isOperational === "undefined" ||
       error.isOperational === false
     ) {
-      logger.error(`LogoutAction : ${error.message}`);
+      console.error(`LogoutAction : ${error.message}`);
       return { error: "Server Error" };
     } else {
       return {
