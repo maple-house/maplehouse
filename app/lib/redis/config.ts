@@ -4,8 +4,6 @@ const globalForRedis = globalThis as unknown as {
   ioredisClient?: Redis;
 };
 
-console.log(process.env.NODE_ENV)
-
 const redis: Redis =
   globalForRedis.ioredisClient ??
   new Redis(process.env.REDIS_URL!, {

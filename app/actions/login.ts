@@ -29,6 +29,8 @@ export async function LoginEmailAction(
 
     const session_token = await getSessionCookie(); // Get cookies
 
+    console.info("Login Started")
+
     //If session exists
     if (session_token !== null) {
       const session_info = await readSessionByToken(session_token); //Get session info from cookies
@@ -97,7 +99,7 @@ export async function LoginEmailAction(
       typeof error.isOperational === "undefined" ||
       error.isOperational === false
     ) {
-      console.error(`LoginEmailAction : ${error.message}`);
+      //console.error(`LoginEmailAction : ${error.message}`);
       return { error: "Server Error" };
     } else {
       return {
@@ -159,7 +161,7 @@ export async function LoginOTPAction(formState: TypeLoginOTPValidationSchema) {
       typeof error.isOperational === "undefined" ||
       error.isOperational === false
     ) {
-      console.error(`LoginOTPAction : ${error.message}`);
+      //console.error(`LoginOTPAction : ${error.message}`);
       return { error: "Server Error" };
     } else {
       return {
@@ -229,7 +231,7 @@ export async  function LoginResendOTPAction() {
       typeof error.isOperational === "undefined" ||
       error.isOperational === false
     ) {
-      console.error(`LoginResendOTPAction : ${error.message}`);
+      //console.error(`LoginResendOTPAction : ${error.message}`);
       return { error: "Server Error" };
     } else {
       return {
@@ -277,7 +279,7 @@ export async function LogoutAction() {
       typeof error.isOperational === "undefined" ||
       error.isOperational === false
     ) {
-      console.error(`LogoutAction : ${error.message}`);
+      //console.error(`LogoutAction : ${error.message}`);
       return { error: "Server Error" };
     } else {
       return {
