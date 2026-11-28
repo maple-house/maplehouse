@@ -15,6 +15,7 @@ export async function setSessionCookie(
     sameSite: "lax", // blocks the classic cross-site POST/state-changing CSRF vector
     path: "/", // required by the __Host- prefix
     expires: expiresAt, // explicit, matches your per-role session lifetime exactly
+    priority : "high",
   });
 }
 
@@ -37,5 +38,6 @@ export async function deleteSessionCookie(): Promise<void> {
     sameSite: "lax",
     path: "/",
     expires: new Date(0),
+    priority : "low"
   });
 }
