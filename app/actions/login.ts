@@ -20,6 +20,7 @@ import {
 import { createOTP, verifyOTP } from "../lib/auth/otp";
 import { revalidatePath } from "next/cache";
 import { otp_mail } from "../lib/mail/otp_mail";
+import { after } from 'next/server';
 
 export async function LoginEmailAction(
   formState: TypeLoginEmailValidationSchema,
@@ -28,8 +29,6 @@ export async function LoginEmailAction(
     //Validate Session //
 
     const session_token = await getSessionCookie(); // Get cookies
-
-    console.info("Login Started")
 
     //If session exists
     if (session_token !== null) {
@@ -71,7 +70,13 @@ export async function LoginEmailAction(
     const { otp } = await createOTP(user[0].email);
 
     if(process.env.NODE_ENV === "production") {
-      await otp_mail(user[0].email,otp,`${user[0].first_name} ${user[0].last_name}`);
+      after(async () => {
+        try {
+          await otp_mail(user[0].email,otp,`${user[0].first_name} ${user[0].last_name}`);
+        } catch (error : any) {
+          console.error(`LoginResendOTPAction : ${error.message}`);
+        }
+      });
     }else {
       console.log(otp);
     } 
@@ -99,7 +104,7 @@ export async function LoginEmailAction(
       typeof error.isOperational === "undefined" ||
       error.isOperational === false
     ) {
-      //console.error(`LoginEmailAction : ${error.message}`);
+      console.error(`LoginEmailAction : ${error.message}`);
       return { error: "Server Error" };
     } else {
       return {
@@ -161,7 +166,7 @@ export async function LoginOTPAction(formState: TypeLoginOTPValidationSchema) {
       typeof error.isOperational === "undefined" ||
       error.isOperational === false
     ) {
-      //console.error(`LoginOTPAction : ${error.message}`);
+      console.error(`LoginOTPAction : ${error.message}`);
       return { error: "Server Error" };
     } else {
       return {
@@ -216,7 +221,13 @@ export async  function LoginResendOTPAction() {
     const {otp} = await createOTP(user[0].email);
 
     if(process.env.NODE_ENV === "production") {
-      await otp_mail(user[0].email,otp,`${user[0].first_name} ${user[0].last_name}`);
+      after(async () => {
+        try {
+          await otp_mail(user[0].email,otp,`${user[0].first_name} ${user[0].last_name}`);
+        } catch (error : any) {
+          console.error(`LoginResendOTPAction : ${error.message}`);
+        }
+      });
     }else {
       console.log(otp);
     }
@@ -231,7 +242,7 @@ export async  function LoginResendOTPAction() {
       typeof error.isOperational === "undefined" ||
       error.isOperational === false
     ) {
-      //console.error(`LoginResendOTPAction : ${error.message}`);
+      console.error(`LoginResendOTPAction : ${error.message}`);
       return { error: "Server Error" };
     } else {
       return {
@@ -279,7 +290,7 @@ export async function LogoutAction() {
       typeof error.isOperational === "undefined" ||
       error.isOperational === false
     ) {
-      //console.error(`LogoutAction : ${error.message}`);
+      console.error(`LogoutAction : ${error.message}`);
       return { error: "Server Error" };
     } else {
       return {
